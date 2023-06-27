@@ -1,6 +1,9 @@
 <template>
-  <div v-for="num of numStore.nums" :key="num.id">
-    <h3><button @click="num.count ++">Добавить</button> {{ num.count }}</h3>
+  <div>
+    <nuxt-link to="/json"><h1>Следующее задание</h1></nuxt-link>
+    <div v-for="num of numStore.nums" :key="num.id">
+      <h3><button @click="num.count ++">Добавить</button> {{ num.count }}</h3>
+    </div>
   </div>
 </template>
 
