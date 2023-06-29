@@ -2,16 +2,14 @@
   <div>
     <NuxtPage />
     <div class="paging">
-      <nuxt-link to="/page/1">1</nuxt-link>
-      <nuxt-link to="/page/2">2</nuxt-link>
+      <nuxt-link to="/"><h3>home</h3></nuxt-link>
+      <nuxt-link to="/page/1"><h3>1</h3></nuxt-link>
+      <nuxt-link to="/page/2"><h3>2</h3></nuxt-link>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-
-}
 </script>
 
 <style>
