@@ -3,6 +3,7 @@
     <NuxtPage />
     <div class="paging">
       <nuxt-link to="/"><h3>home</h3></nuxt-link>
+      <nuxt-link to="/posts"><h3>POSTS</h3></nuxt-link>
       <nuxt-link to="/page/1"><h3>1</h3></nuxt-link>
       <nuxt-link to="/page/2"><h3>2</h3></nuxt-link>
     </div>
