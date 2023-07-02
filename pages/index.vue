@@ -1,8 +1,5 @@
 <template>
   <div>
-    <Pagination 
-    :posts="posts"
-    />
   </div>
 </template>
 
