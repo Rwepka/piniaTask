@@ -8,11 +8,11 @@
 <script>
 import {usePostStore} from '/stores/postStore.js'
 export default {
-  setup(){
+  async setup(){
     const postStore = usePostStore()
-    const { data: jposts } = useFetch('https://jsonplaceholder.typicode.com/posts')
-    postStore.setPost(jposts)
-
+    const { data: jposts } = await useFetch('https://jsonplaceholder.typicode.com/posts')
+    postStore.setPost(jposts.value)
+   
     return {
       posts: postStore.posts,
       setPost: postStore.setPost,
