@@ -36,7 +36,7 @@ export default defineComponent({
       default: 7
     },
     posts: {
-      type: Object,
+      type: Array,
       required: true
     }
   },
