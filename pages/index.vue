@@ -14,9 +14,7 @@ export default {
     postStore.setPost(jposts.value)
    
     return {
-      posts: postStore.posts,
-      setPost: postStore.setPost,
-      jposts
+      posts: postStore.posts
     }
   },
 }
