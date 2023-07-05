@@ -1,8 +1,11 @@
 <template>
   <div>
-    <Pagination 
+    <Pagination v-if="posts!=null"
     :posts="posts"
     />
+    <div v-else>
+      Ошибка, posts = null
+    </div>
   </div>
 </template>
 <script>

@@ -16,6 +16,14 @@
         <div class="border">userId: {{ post.userId }} </div>
         <div class="border">title: {{ post.title }} </div>
         <div class="border">body: {{ post.body }} </div>
+        <div>
+          <button @click="showComments(post.id)">Коментарии</button>
+          <div v-if="canShowComment(post.id)">
+            <div class="border">author: {{ commentAuthor() }}</div>
+            <div class="border">mail: {{ commentMail() }}</div>
+            <div class="border">body: {{ commentBody() }}</div>
+          </div>
+        </div>
       </li>
     </ul>
     <div class="buttons">
@@ -33,11 +41,20 @@
 </template>
 
 <script>
+import {useCommentStore} from '/stores/commentStore.js'
 export default defineComponent({
+  setup(){
+    const commentStore = useCommentStore()
+    return {
+      setComment: commentStore.setComment,
+      comments: commentStore.comments,
+      commentStore: commentStore
+    }
+  },
   data(){
     return {
       pageNumber: 1,
-      totalPages: Number
+      totalPages: Number,
     }
   },
   props: {
@@ -62,13 +79,43 @@ export default defineComponent({
       this.pageNumber = destination
     },
     mayBe(but){
-      console.log('but', but)
-      console.log('pageNumber', this.pageNumber)
       if (but < this.pageNumber + 4 && but > 1 && but > this.pageNumber - 4 && but < this.totalPages){
         return true
       }
       else {
         return false
+      }
+    },
+    async showComments(postId){
+      const { data: comments } = await useFetch('https://jsonplaceholder.typicode.com/posts/'+ Number(postId) +'/comments')
+      this.commentStore.setComment(comments.value)
+    },
+    commentPostId(){
+      for (let comments of this.commentStore.comments) {
+        return comments.postId
+      }
+    },
+    canShowComment(postId){
+      if (this.commentPostId() == postId) {
+        return true
+      }
+      else {
+        return false
+      }
+    },
+    commentAuthor(){
+      for (let comments of this.commentStore.comments) {
+        return comments.name
+      }
+    },
+    commentMail(){
+      for (let comments of this.commentStore.comments) {
+        return comments.mail
+      }
+    },
+    commentBody(){
+      for (let comments of this.commentStore.comments) {
+        return comments.body
       }
     }
   },
