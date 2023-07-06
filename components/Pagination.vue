@@ -19,9 +19,13 @@
         <div>
           <button @click="showComments(post.id)">Коментарии</button>
           <div v-if="canShowComment(post.id)">
-            <div class="border">author: {{ commentAuthor() }}</div>
-            <div class="border">mail: {{ commentMail() }}</div>
-            <div class="border">body: {{ commentBody() }}</div>
+            <div v-for="comment of commentStore.comments" :key="comment.id">
+              <br>
+              <div class="border">author: {{ comment.name }}</div>
+              <div class="border">mail: {{ comment.email }}</div>
+              <div class="border">body: {{ comment.body }}</div>
+              <br>
+            </div>
           </div>
         </div>
       </li>
@@ -103,21 +107,6 @@ export default defineComponent({
         return false
       }
     },
-    commentAuthor(){
-      for (let comments of this.commentStore.comments) {
-        return comments.name
-      }
-    },
-    commentMail(){
-      for (let comments of this.commentStore.comments) {
-        return comments.mail
-      }
-    },
-    commentBody(){
-      for (let comments of this.commentStore.comments) {
-        return comments.body
-      }
-    }
   },
   computed: {
     pageCount() {
