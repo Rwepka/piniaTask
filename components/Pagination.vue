@@ -13,11 +13,17 @@
     </div>
     <ul>
       <li v-for="post in paginatedData" :key="post.id">
-        <div class="border">userId: {{ post.userId }} </div>
+        <div class="username__container">
+          <div class="border">userId: {{ post.userId }} <br> username: 
+            <div v-if="canShowUsers">
+              {{ userStore.users[post.userId].name }}
+            </div>
+          </div>
+          <button @click="showUserName(), canShowUsers = !canShowUsers">show username</button>
+        </div>
         <div class="border">title: {{ post.title }} </div>
         <div class="border">body: {{ post.body }} </div>
         <div>
-          <button @click="showComments(post.id)">Коментарии</button>
           <div v-if="canShowComment(post.id)">
             <div v-for="comment of commentStore.comments" :key="comment.id">
               <br>
@@ -26,6 +32,9 @@
               <div class="border">body: {{ comment.body }}</div>
               <br>
             </div>
+          </div>
+          <div class="button__container">
+            <button @click="showComments(post.id)" @dblclick="showComments(-1)" class="comment__button">Коментарии</button>
           </div>
         </div>
       </li>
@@ -46,19 +55,26 @@
 
 <script>
 import {useCommentStore} from '/stores/commentStore.js'
+import {useUserStore} from '/stores/userStore.js'
 export default defineComponent({
   setup(){
     const commentStore = useCommentStore()
+    const userStore = useUserStore()
     return {
       setComment: commentStore.setComment,
       comments: commentStore.comments,
-      commentStore: commentStore
+      commentStore: commentStore,
+
+      serUsers: userStore.serUsers,
+      users: userStore.users,
+      userStore: userStore
     }
   },
   data(){
     return {
       pageNumber: 1,
       totalPages: Number,
+      canShowUsers: false
     }
   },
   props: {
@@ -107,6 +123,15 @@ export default defineComponent({
         return false
       }
     },
+    userId(){
+      for (let users of this.userStore.users) {
+        return users.id
+      }
+    },
+    async showUserName(){
+        const { data: userName } = await useFetch('https://jsonplaceholder.typicode.com/users/')
+        this.userStore.setUsers(userName.value)
+    },
   },
   computed: {
     pageCount() {
@@ -130,11 +155,16 @@ export default defineComponent({
 </script>
 
 <style>
+.username__container {
+  display: flex;
+  justify-content: space-between;
+}
 ul {
   display: grid;
-  grid-template-columns: 40% 40%;
-  justify-content: center;
-  gap: 20px 30px;
+  grid-template-columns: 100%;
+  margin: 0 20%;
+  gap: 60px 0;
+  padding: 0;
 }
 .buttons {
   display: flex;
@@ -142,17 +172,21 @@ ul {
   margin: 60px 20%;
   justify-content: space-between;
   user-select: none;
+  box-shadow: 0 0 15px 0 black;
+  padding: 5px;
+  border-radius: 5px;
 }
 .border {
-  border: solid 1px;
+  border: solid 1px gray;
   padding: 5px;
 }
 li {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: solid 1px;
   padding: 5px;
+  box-shadow: 0 0 15px 0 black;
+  border-radius: 5px;
 }
 .num__buttons {
   display: flex;
@@ -163,5 +197,12 @@ li {
   height: 40px;
   font-size: 18px;
   text-align: center;
+}
+.comment__button {
+  margin-top: 5px;
+}
+.button__container {
+  display: flex;
+  justify-content: center;
 }
 </style> 

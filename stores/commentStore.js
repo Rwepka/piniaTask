@@ -8,6 +8,6 @@ export const useCommentStore = defineStore('commentStore', {
   actions: {
     setComment(arr) {
       this.comments = arr
-    }
+    },
   }
 })
