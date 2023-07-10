@@ -14,9 +14,18 @@
     <ul>
       <li v-for="post in paginatedData" :key="post.id">
         <div class="username__container">
-          <div class="border">userId: {{ post.userId }} <br> username: 
+          <div class="border">userId: {{ post.userId }} <br> user: 
             <div v-if="canShowUsers">
-              {{ userStore.users[post.userId].name }}
+              <div>name: {{ userStore.users[post.userId].name }}</div>
+              <div>username: {{ userStore.users[post.userId].username }}</div>
+              <div>email: {{ userStore.users[post.userId].email }}</div>
+              <div>adress: {{ userStore.users[post.userId].address.street }}, {{ userStore.users[post.userId].address.suite }},
+                           {{ userStore.users[post.userId].address.city }}, {{ userStore.users[post.userId].address.zipcode }}, 
+                           {{ userStore.users[post.userId].address.geo.lat }}, {{ userStore.users[post.userId].address.geo.lng }}
+              <div>phone: {{ userStore.users[post.userId].phone }}</div>
+              <div>website: {{ userStore.users[post.userId].website }}</div>
+              <div>company: {{ userStore.users[post.userId].company.name }}, {{ userStore.users[post.userId].company.catchPhrase }}, {{ userStore.users[post.userId].company.bs }}</div>
+                </div>
             </div>
           </div>
           <button @click="showUserName(), canShowUsers = !canShowUsers">show username</button>
