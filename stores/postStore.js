@@ -2,12 +2,12 @@ import { defineStore } from "pinia";
 export const usePostStore = defineStore('postStore', {
   state(){
     return {
-      posts: []
+      posts: [],
     }
   },
   actions: {
     setPost(arr) {
       this.posts = arr
-    }
+    },
   }
 })

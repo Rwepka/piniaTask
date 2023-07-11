@@ -1,8 +1,11 @@
 <template>
   <div>
-    <Pagination 
+    <Pagination v-if="posts!=null"
     :posts="posts"
     />
+    <div v-else>
+      Ошибка, posts = null
+    </div>
   </div>
 </template>
 <script>
@@ -14,9 +17,7 @@ export default {
     postStore.setPost(jposts.value)
    
     return {
-      posts: postStore.posts,
-      setPost: postStore.setPost,
-      jposts
+      posts: postStore.posts
     }
   },
 }

@@ -1,5 +1,8 @@
 <template>
   <div>
+    <NuxtLink to="/todo">todo</NuxtLink>
+    <div></div>
+    <NuxtLink to="/">home</NuxtLink>
     <NuxtPage />
   </div>
 </template>
