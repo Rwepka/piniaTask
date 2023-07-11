@@ -1,11 +1,17 @@
 <template>
   <div v-if="showUserList" class="user__list">
     <div class="user" v-for="users of userStore.users">
-      <div @click="showUserList = false, currentUser = users.name">{{ users.name }}</div>
+      <div @click="showUserList = false, currentUser = users.id">{{ users.name }}</div>
     </div>
   </div>
   <div v-else>
-    {{ currentUser }}
+    <br>
+    <div v-for="todo of todoList">
+      <div v-if="todo.userId == currentUser">
+        <br>
+        <div> <input type="checkbox" :checked="todo.completed">{{ todo.title }} </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -13,11 +19,13 @@ import {useUserStore} from '/stores/userStore.js'
   export default {
     async setup(){
       const userStore = useUserStore()
-      const {data: userList} = await useFetch('https://jsonplaceholder.typicode.com/users')
+      const {data: userList} = useFetch('https://jsonplaceholder.typicode.com/users')
+      const {data: todoList} = useFetch('https://jsonplaceholder.typicode.com/todos')
       userStore.setUsers(userList.value)
 
       return {
-        userStore: userStore
+        userStore: userStore,
+        todoList: todoList
       }
     },
     data(){
